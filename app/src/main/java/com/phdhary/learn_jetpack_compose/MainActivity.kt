@@ -2,6 +2,8 @@ package com.phdhary.learn_jetpack_compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -36,12 +38,20 @@ class MainActivity : ComponentActivity() {
 var i = 0
 
 @Composable
-fun MyComposable() {
-    SideEffect {
-        i++
+fun MyComposable(backPressedDispatcher: OnBackPressedDispatcher) {
+    val callback =
+        object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // do something
+            }
+        }
+    DisposableEffect(key1 = backPressedDispatcher) {
+        backPressedDispatcher.addCallback(callback)
+        onDispose {
+            callback.remove()
+        }
     }
     Button(onClick = { }) {
         Text("Click me")
     }
-
 }

@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -28,9 +29,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LazyColumn {
-                items(5000) {
+                itemsIndexed(
+                    listOf("This", "Is", "Jetpack", "Compose", "List")
+                ) { index, item ->
                     Text(
-                        "This is item $it",
+                        text = "<$index> $item",
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 24.dp),

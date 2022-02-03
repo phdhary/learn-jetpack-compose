@@ -11,6 +11,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
@@ -23,6 +25,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
@@ -30,28 +33,37 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val scaffoldState = rememberScaffoldState()
+            var counter by remember {
+                mutableStateOf(0)
+            }
 
-        }
-    }
-}
+            if (counter % 5 == 0 && counter > 0) {
+                LaunchedEffect(key1 = scaffoldState.snackbarHostState) {
+                    scaffoldState.snackbarHostState.showSnackbar("Hello")
+                }
+            }
 
-var i = 0
+            Scaffold(
+                scaffoldState = scaffoldState,
+                floatingActionButton = {
+                    FloatingActionButton(onClick = { counter++ }) {
+                        Icon(Icons.Rounded.Add, contentDescription = "")
+                    }
+                }
+            ) {
 
-@Composable
-fun MyComposable(backPressedDispatcher: OnBackPressedDispatcher) {
-    val callback =
-        object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // do something
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text(
+                        counter.toString(), fontSize = 30.sp
+                    )
+                }
             }
         }
-    DisposableEffect(key1 = backPressedDispatcher) {
-        backPressedDispatcher.addCallback(callback)
-        onDispose {
-            callback.remove()
-        }
-    }
-    Button(onClick = { }) {
-        Text("Click me")
     }
 }

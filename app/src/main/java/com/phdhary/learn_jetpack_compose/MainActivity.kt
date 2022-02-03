@@ -28,26 +28,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            LazyColumn {
-                itemsIndexed(
-                    listOf("This", "Is", "Jetpack", "Compose", "List")
-                ) { index, item ->
-                    Text(
-                        text = "<$index> $item",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 24.dp),
-                        textAlign = TextAlign.Center,
-                    )
-                }
-            }
+
         }
     }
 }
 
+var i = 0
 
-@Preview
 @Composable
-fun Showd() {
-//    ColorBox(modifier = Modifier.fillMaxSize())
+fun MyComposable() {
+    i++
+    Button(onClick = { }) {
+        Text("Click me")
+    }
+
 }

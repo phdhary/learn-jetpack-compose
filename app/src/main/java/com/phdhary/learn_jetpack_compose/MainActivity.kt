@@ -6,10 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -40,8 +37,9 @@ class MainActivity : ComponentActivity() {
 )
 @Composable
 fun HomeScreen() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxSize()
             .border(
@@ -56,10 +54,9 @@ fun HomeScreen() {
             .background(
                 color = Color.Cyan,
             ),
-
-        ) {
-        Text("shut up")
-        Text("shut the f up")
-        Text("shut up")
+    ) {
+        Text("hello")
+        Text("what")
+        Text("is up")
     }
 }

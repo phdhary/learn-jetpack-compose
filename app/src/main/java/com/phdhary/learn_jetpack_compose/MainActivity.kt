@@ -2,43 +2,31 @@ package com.phdhary.learn_jetpack_compose
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.launch
-import kotlin.random.Random
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val scaffoldState = rememberScaffoldState()
-            var counter by remember {
-                mutableStateOf(0)
+            val counter = produceState(initialValue = 0) {
+                delay(3000L)
+                value = 10
             }
 
-            if (counter % 5 == 0 && counter > 0) {
+            if (counter.value % 5 == 0 && counter.value > 0) {
                 LaunchedEffect(key1 = scaffoldState.snackbarHostState) {
                     scaffoldState.snackbarHostState.showSnackbar("Hello")
                 }
@@ -47,12 +35,11 @@ class MainActivity : ComponentActivity() {
             Scaffold(
                 scaffoldState = scaffoldState,
                 floatingActionButton = {
-                    FloatingActionButton(onClick = { counter++ }) {
+                    FloatingActionButton(onClick = { }) {
                         Icon(Icons.Rounded.Add, contentDescription = "")
                     }
                 }
             ) {
-
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),
@@ -60,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Text(
-                        counter.toString(), fontSize = 30.sp
+                        counter.value.toString(), fontSize = 30.sp
                     )
                 }
             }

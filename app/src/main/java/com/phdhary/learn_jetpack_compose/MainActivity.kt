@@ -37,7 +37,9 @@ var i = 0
 
 @Composable
 fun MyComposable() {
-    i++
+    SideEffect {
+        i++
+    }
     Button(onClick = { }) {
         Text("Click me")
     }

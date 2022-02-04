@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,18 +29,12 @@ class MainActivity : ComponentActivity() {
             var percentage by remember {
                 mutableStateOf(0f)
             }
-            val p = produceState(initialValue = 0f) {
-                for (i in 0..100) {
-                    delay(300)
-                    value = i.toFloat() / 100
-                }
-            }
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressBar(
-                    percentage = p.value,
+                    percentage = percentage,
                     number = 100
                 )
                 Column(

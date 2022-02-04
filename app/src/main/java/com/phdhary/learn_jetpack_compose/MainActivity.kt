@@ -3,7 +3,6 @@ package com.phdhary.learn_jetpack_compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
@@ -22,16 +21,47 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            var percentage by remember {
+                mutableStateOf(0f)
+            }
+            val p = produceState(initialValue = 0f) {
+                for (i in 0..100) {
+                    delay(300)
+                    value = i.toFloat() / 100
+                }
+            }
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressBar(percentage = 0.8f, number = 100)
+                CircularProgressBar(
+                    percentage = p.value,
+                    number = 100
+                )
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 30.dp)
+                        .align(Alignment.BottomCenter)
+                        .fillMaxHeight(0.4f),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(onClick = { percentage = 0f }) {
+                        Text("Reset")
+                    }
+                    Slider(
+                        value = percentage,
+                        onValueChange = {
+                            percentage = it
+                        },
+                    )
+
+                }
             }
         }
     }
@@ -84,7 +114,7 @@ fun CircularProgressBar(
     radius: Dp = 50.dp,
     color: Color = Color.Green,
     strokeWidth: Dp = 8.dp,
-    animDuration: Int = 1000,
+    animDuration: Int = 300,
     animDelay: Int = 0,
 ) {
     var animationPlayed by remember {
@@ -97,6 +127,8 @@ fun CircularProgressBar(
             delayMillis = animDelay
         )
     )
+
+
 
     LaunchedEffect(key1 = true) {
         animationPlayed = true

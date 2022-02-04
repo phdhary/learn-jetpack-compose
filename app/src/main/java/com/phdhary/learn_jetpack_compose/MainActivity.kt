@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -27,10 +28,21 @@ class MainActivity : ComponentActivity() {
                 targetValue = sizeState,
                 spring(Spring.DampingRatioHighBouncy)
             )
+
+            val infiniteTransition = rememberInfiniteTransition()
+            val color by infiniteTransition.animateColor(
+                initialValue = Color.Magenta,
+                targetValue = Color.Cyan,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(durationMillis = 2000),
+                    repeatMode = RepeatMode.Reverse,
+                )
+            )
+
             Box(
                 modifier = Modifier
                     .size(size)
-                    .background(Color.Cyan),
+                    .background(color),
                 contentAlignment = Alignment.Center
             ) {
                 Column {

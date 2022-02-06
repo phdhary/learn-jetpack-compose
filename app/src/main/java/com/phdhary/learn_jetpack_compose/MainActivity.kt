@@ -24,6 +24,7 @@ import androidx.compose.ui.input.pointer.pointerInteropFilter
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -67,6 +68,46 @@ class MainActivity : ComponentActivity() {
 
                 }
             }
+
+        }
+    }
+}
+
+@ExperimentalComposeUiApi
+@Preview
+@Composable
+fun TestPreview() {
+
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xff101010))
+    ) {
+        Row(
+            modifier = Modifier
+                .border(1.dp, Color.Green, RoundedCornerShape(10.dp))
+                .padding(30.dp)
+        ) {
+            var volume by remember {
+                mutableStateOf(0f)
+            }
+            val barCount = 20
+            MusicKnob(
+                modifier = Modifier
+                    .size(100.dp)
+            ) {
+                volume = it
+            }
+            Spacer(modifier = Modifier.width(20.dp))
+            VolumeBar(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(30.dp),
+                activeBars = (barCount * volume).roundToInt(),
+                barCount = barCount
+            )
+
 
         }
     }
